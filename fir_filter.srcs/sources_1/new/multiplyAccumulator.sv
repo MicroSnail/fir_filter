@@ -30,30 +30,39 @@ module multiplyAccumulator
   input   [nData * datBW - 1 : 0]   inB,
   input                             clk,
   input                             rst,
-  output reg [2 * datBW - 1 : 0]    result = 0,
+//  input                             execute,
+  output      [2 * datBW - 1 : 0]   mac_out,
   output                            mac_done
   
 );
-  reg [nData * datBW - 1 : 0] localInA;
-  reg [nData * datBW - 1 : 0] localInB;
+
   reg [$clog2(nData) - 1 : 0] cursor = 0;
-  reg written = 0;
-  assign mac_done = (cursor == (nData-1));
   
+  
+// I have a feeling that this could be done with more elegant code
+//  mac_done will be reset to 0 when cursor is reset. 
+  reg almost_done = 0;
+  assign mac_done = (cursor==0) && almost_done;
+
+//  Do I want to have two copies of result register?  
+  reg [2 * datBW - 1 : 0] result = 0;
+  
+  assign mac_out = mac_done ? result : 0;
 
   
   always @(posedge clk) begin
     if (rst) begin
       cursor  <=  0;
-      written <=  0;
       result  <=  {(nData * datBW - 1){1'b0}};
-      $display("Reset registered.");
-      
+      almost_done <= 0;
     end else if (~mac_done) begin
+//    end else if (~mac_done && execute) begin
       result <= result + inA[cursor * datBW  +: datBW] * inB[cursor * datBW +: datBW];
-      cursor <= cursor + 1;            
-
-      $display("result possibly previous result... = %d", result);                     
+      cursor <= cursor + 1;
+    end 
+    
+    if  (cursor == (nData-1)) begin
+      almost_done <= 1;
     end
   end
 

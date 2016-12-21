@@ -25,13 +25,13 @@ module test_wrapper(
     );
     parameter nData = 16;
     parameter dataBitwidth = 16;
+    parameter linCounterBW = 4;
     
-    reg   [dataBitwidth - 1 : 0]  fixedArray [0 : nData - 1];
-    reg   [dataBitwidth * nData - 1 : 0] flatCoeff;
-    reg   [dataBitwidth * nData - 1 : 0] flatSample;
-    reg   [2 * nData - 1 : 0]     mac_1_sum;    
-    reg   [4:0]                   i;
-    reg   [16 - 1 : 0]            delayCounter=0; 
+    reg   [dataBitwidth * nData - 1 : 0]  flatCoeff;
+//    reg   [dataBitwidth * nData - 1 : 0]  flatSample;
+    reg   [2 * dataBitwidth - 1 : 0]      mac_1_out;    
+    reg   [4:0]                           i;
+    reg   [linCounterBW - 1 : 0]          linCounter = 0;
     wire  [dataBitwidth - 1 : 0]  fakeSample;
     wire                          mac_done;
 
@@ -48,8 +48,7 @@ module test_wrapper(
     reg [$clog2(nData) - 1 - 1: 0] counter = 0;
     always @(posedge clk_mac) begin
       counter <= counter + 1;
-      if (counter == 0) begin
-        clk_sampler <= ~clk_sampler;
+      if (counter == 0) begin      clk_sampler <= ~clk_sampler;
       end
     end
     
@@ -58,46 +57,64 @@ module test_wrapper(
 //    This is to populate the fixed array for coefficients
     initial begin
       clk <= 0;
-      $display("clog2(nData) = %d", $clog2(nData));
       for (i = 0; i < nData; i ++) begin
-        $display("i = %d",i);
-        fixedArray[i] = i;
         flatCoeff[i * dataBitwidth +: dataBitwidth] = 1;
-        flatSample[i * dataBitwidth +: dataBitwidth] = 5+i;
-        $display("testArray[%d] = %d", i,fixedArray[i]);
       end
     end
 
 //------Sampler----------------------------------------//
+    reg   [dataBitwidth * nData - 1 : 0]  flatSample = 0;
+    reg   [$clog2(nData) - 1 : 0]         latestSampleIndex = 0;
+    wire  [$clog2(nData) - 1 : 0]         earliestSampleIndex;
+    assign earliestSampleIndex = latestSampleIndex + 1;
+
+    reg sampled = 0;
+    reg mac_1_rst = 0;
+
+//  Making fakeData 
+    assign fakeSample = linCounter * 2 + 10;
+    
     always @(posedge clk_sampler) begin
-      
+        linCounter <= linCounter + 1;
+        flatSample[latestSampleIndex * dataBitwidth +: dataBitwidth] <= fakeSample;
+        latestSampleIndex <= latestSampleIndex + 1; 
+        sampled <= 1;
     end
+
+
+
 //------Sampler end------------------------------------//    
 
 //------Multiply Accumulator---------------------------//
-  wire mac_1_rst = 0;
+
+/* These are for generating clocks to clear the MAC, for
+ * n MACs in parallel, they can use the same clear signal.
+ */
+    reg [$clog2(nData) : 0] resetCounter = 0;
+    wire mac_rst;
+    assign mac_rst = (resetCounter == nData);
+    always @(posedge clk_mac) begin
+      if(mac_rst) begin
+        resetCounter <= 0;
+      end else begin
+        resetCounter <= resetCounter + 1;
+      end
+    end
+  
   
   multiplyAccumulator mac_1(
 		.inA(flatCoeff), 
 		.inB(flatSample), 
 		.clk(clk_mac), 
-		.rst(mac_1_rst),
-		.result(mac_1_sum),
+		.rst( mac_rst ),
+//		.execute(sampled),
+		.mac_out(mac_1_out),
 		.mac_done(mac_done)
 		);
 //------Multiply Accumulator end-----------------------//
     
    
-//  Making fakeData 
-    assign fakeSample = delayCounter * 2;
-    
-    always @(posedge clk) begin
-      delayCounter <= delayCounter + 1;
-      
-      $display("Delay counter = %d", delayCounter);
-      $display("fakeData = %d", fakeSample);
-      
-    end
+
 endmodule    
 
     
