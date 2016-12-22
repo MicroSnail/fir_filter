@@ -55,6 +55,7 @@ module multiplyAccumulator
       cursor  <=  0;
       result  <=  {(nData * datBW - 1){1'b0}};
       almost_done <= 0;
+      
     end else if (~mac_done) begin
 //    end else if (~mac_done && execute) begin
       result <= result + inA[cursor * datBW  +: datBW] * inB[cursor * datBW +: datBW];

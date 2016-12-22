@@ -20,22 +20,28 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module test_wrapper(
-
+module test_wrapper
+  #(
+  parameter nData = 16,
+  parameter dataBitwidth = 16,
+  parameter linCounterBW = 4)
+   (
+    output [2 * dataBitwidth - 1 : 0] debug
+ 
     );
-    parameter nData = 16;
-    parameter dataBitwidth = 16;
-    parameter linCounterBW = 4;
+
     
     reg   [dataBitwidth * nData - 1 : 0]  flatCoeff;
 //    reg   [dataBitwidth * nData - 1 : 0]  flatSample;
     reg   [2 * dataBitwidth - 1 : 0]      mac_1_out;    
     reg   [4:0]                           i;
     reg   [linCounterBW - 1 : 0]          linCounter = 0;
-    wire  [dataBitwidth - 1 : 0]  fakeSample;
     wire                          mac_done;
-
-//------Fake Clock generator---------------------------//
+  
+    assign debug = mac_1_out;
+    
+    
+//------Clock generator for simulation-----------------//
     reg clk = 0;
     reg clk_sampler = 0;
     reg clk_mac;    
@@ -52,7 +58,7 @@ module test_wrapper(
       end
     end
     
-//------Fake Clock generator end-----------------------//
+//-----------Clock generator end-----------------------//
 
 //    This is to populate the fixed array for coefficients
     initial begin
@@ -64,24 +70,18 @@ module test_wrapper(
 
 //------Sampler----------------------------------------//
     reg   [dataBitwidth * nData - 1 : 0]  flatSample = 0;
-    reg   [$clog2(nData) - 1 : 0]         latestSampleIndex = 0;
-    wire  [$clog2(nData) - 1 : 0]         earliestSampleIndex;
-    assign earliestSampleIndex = latestSampleIndex + 1;
-
     reg sampled = 0;
     reg mac_1_rst = 0;
+    wire  [dataBitwidth - 1 : 0]  newSample;
 
 //  Making fakeData 
-    assign fakeSample = linCounter * 2 + 10;
+    assign newSample = linCounter * 2 + 10;
     
     always @(posedge clk_sampler) begin
         linCounter <= linCounter + 1;
-        flatSample[latestSampleIndex * dataBitwidth +: dataBitwidth] <= fakeSample;
-        latestSampleIndex <= latestSampleIndex + 1; 
+        flatSample <= {newSample, flatSample[nData * dataBitwidth - 1 : dataBitwidth ]};
         sampled <= 1;
     end
-
-
 
 //------Sampler end------------------------------------//    
 
