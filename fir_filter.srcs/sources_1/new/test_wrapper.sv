@@ -24,22 +24,44 @@ module test_wrapper
   #(
   parameter nData = 16,
   parameter dataBitwidth = 16,
-  parameter linCounterBW = 4)
+  parameter nMAC  = 50,
+  parameter linCounterBW = 16,    //This is for simulation anddebugging
+  parameter outputBW = dataBitwidth * 2
+  )
    (
     output [2 * dataBitwidth - 1 : 0] debug
  
     );
+    // total number of sample/ size of the sample array is
+    // (nData * nMAC)
+    // The total number of bits in the flatten array then 
+    // is given by (nData * nMAC * dataBitwidth)
+    localparam totalNBits = nData * dataBitwidth * nMAC;
+    localparam totalNSamples = nData * nMAC;
+    localparam nBits_MAC  = nData * dataBitwidth;
+//-------------------End of parameters-----------------//
 
     
-    reg   [dataBitwidth * nData - 1 : 0]  flatCoeff;
+    
+    
+    reg   [totalNBits - 1 : 0]      flatCoeff;
 //    reg   [dataBitwidth * nData - 1 : 0]  flatSample;
-    reg   [2 * dataBitwidth - 1 : 0]      mac_1_out;    
-    reg   [4:0]                           i;
-    reg   [linCounterBW - 1 : 0]          linCounter = 0;
-    wire                          mac_done;
-  
+    reg   [outputBW - 1 : 0]        mac_1_out;
+    reg   [outputBW * nMAC - 1 : 0] mac_out;
+    reg   [outputBW - 1 : 0]        mac_sum;
+    reg   [linCounterBW - 1 : 0]    linCounter = 0;
+    wire                            mac_done;
     assign debug = mac_1_out;
     
+//------defining mac_sum ------------------------------//
+    integer i_ms;
+    always_comb  begin
+      for (i_ms = 0; i_ms < nMAC; i_ms ++) begin: mac_sum_block
+        mac_sum = mac_sum + mac_out[i_ms * outputBW - 1 +: outputBW];
+      end
+    end
+    // NOT THE CORRECT WAY EITHER...
+//------defining mac_sum end---------------------------//
     
 //------Clock generator for simulation-----------------//
     reg clk = 0;
@@ -61,31 +83,46 @@ module test_wrapper
 //-----------Clock generator end-----------------------//
 
 //    This is to populate the fixed array for coefficients
+    integer i;
     initial begin
       clk <= 0;
-      for (i = 0; i < nData; i ++) begin
+      for (i = 0; i < totalNSamples; i ++) begin
         flatCoeff[i * dataBitwidth +: dataBitwidth] = 1;
       end
     end
 
 //------Sampler----------------------------------------//
-    reg   [dataBitwidth * nData - 1 : 0]  flatSample = 0;
+    reg   [totalNBits - 1 : 0]  flatSample = 0;
     reg sampled = 0;
     reg mac_1_rst = 0;
     wire  [dataBitwidth - 1 : 0]  newSample;
 
 //  Making fakeData 
-    assign newSample = linCounter * 2 + 10;
+    assign newSample = linCounter + 3;
     
     always @(posedge clk_sampler) begin
         linCounter <= linCounter + 1;
-        flatSample <= {newSample, flatSample[nData * dataBitwidth - 1 : dataBitwidth ]};
+        flatSample <= {newSample, flatSample[totalNBits - 1 : dataBitwidth]};
         sampled <= 1;
     end
 
 //------Sampler end------------------------------------//    
 
-//------Multiply Accumulator---------------------------//
+
+//-------Create multiple arrays, each for a MAC--------//
+    wire   [nBits_MAC - 1 : 0] sampleSplit  [0 : nMAC-1];
+    wire   [nBits_MAC - 1 : 0] coeffSplit   [0 : nMAC-1];
+    genvar iMAC;
+    generate
+      for ( iMAC = 0; iMAC < nMAC; iMAC ++) begin : MACs_block
+        assign sampleSplit[iMAC] = flatSample[(iMAC+1) * nBits_MAC - 1 : iMAC * nBits_MAC];
+        assign coeffSplit[iMAC]  = flatCoeff[(iMAC+1) * nBits_MAC - 1 : iMAC * nBits_MAC];
+      end
+    endgenerate
+//-------Create multiple arrays, (each for a MAC) end--//
+
+
+//------Multiply Accumulator reset counter-------------//
 
 /* These are for generating clocks to clear the MAC, for
  * n MACs in parallel, they can use the same clear signal.
@@ -100,17 +137,30 @@ module test_wrapper
         resetCounter <= resetCounter + 1;
       end
     end
-  
-  
-  multiplyAccumulator mac_1(
-		.inA(flatCoeff), 
-		.inB(flatSample), 
-		.clk(clk_mac), 
-		.rst( mac_rst ),
-//		.execute(sampled),
-		.mac_out(mac_1_out),
-		.mac_done(mac_done)
-		);
+//------Multiply Accumulator reset counter end---------//  
+
+//----Instantiate multiple MACs -----------------------//
+multiplyAccumulator MACs [nMAC-1 : 0] (
+.inA(flatCoeff),
+.inB(flatSample),
+.clk(clk_mac),
+.rst(mac_rst),
+.mac_out(mac_out)
+);
+//----Instantiate multiple MACs end--------------------//
+
+
+
+
+//------Multiply Accumulator---------------------------//  
+//  multiplyAccumulator mac_1(
+//		.inA(flatCoeff), 
+//		.inB(flatSample), 
+//		.clk(clk_mac), 
+//		.rst( mac_rst ),
+//		.mac_out(mac_1_out),
+//		.mac_done(mac_done)
+//		);
 //------Multiply Accumulator end-----------------------//
     
    
