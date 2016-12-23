@@ -29,7 +29,7 @@ module test_wrapper
   parameter outputBW = dataBitwidth * 2
   )
    (
-    output [2 * dataBitwidth - 1 : 0] debug
+    output [outputBW - 1 : 0] debug
  
     );
     // total number of sample/ size of the sample array is
@@ -46,22 +46,16 @@ module test_wrapper
     
     reg   [totalNBits - 1 : 0]      flatCoeff;
 //    reg   [dataBitwidth * nData - 1 : 0]  flatSample;
-    reg   [outputBW - 1 : 0]        mac_1_out;
-    reg   [outputBW * nMAC - 1 : 0] mac_out;
-    reg   [outputBW - 1 : 0]        mac_sum;
-    reg   [linCounterBW - 1 : 0]    linCounter = 0;
+    reg   [outputBW * nMAC - 1 : 0] mac_out_storage;
+    wire  [outputBW * nMAC - 1 : 0] mac_direct_out;
+    wire   [outputBW - 1 : 0]       mac_sum;
+    wire  [nMAC - 1: 0]             mac_armed;
     wire                            mac_done;
-    assign debug = mac_1_out;
     
-//------defining mac_sum ------------------------------//
-    integer i_ms;
-    always_comb  begin
-      for (i_ms = 0; i_ms < nMAC; i_ms ++) begin: mac_sum_block
-        mac_sum = mac_sum + mac_out[i_ms * outputBW - 1 +: outputBW];
-      end
-    end
-    // NOT THE CORRECT WAY EITHER...
-//------defining mac_sum end---------------------------//
+    reg   [linCounterBW - 1 : 0]    linCounter = 0;
+
+
+    assign debug = mac_sum;
     
 //------Clock generator for simulation-----------------//
     reg clk = 0;
@@ -82,6 +76,31 @@ module test_wrapper
     
 //-----------Clock generator end-----------------------//
 
+
+//-----------MAC output storage -----------------------//
+    reg mac_out_ready = 0;
+    reg mac_out_storage_updated = 0;
+    always @(posedge clk) begin
+      if(mac_done && ~mac_out_storage_updated ) begin 
+        mac_out_storage <= mac_direct_out;
+        mac_out_ready   <= 1;
+        mac_out_storage_updated <= 1;
+      end
+    end
+//-----------MAC output storage end--------------------//
+
+    
+//------split mac_out for debug reason-----------------//
+    genvar jj;
+    wire  [outputBW - 1: 0] mac_out_split [0 : nMAC-1];
+    generate  
+      for(jj = 0; jj<nMAC; jj++) begin: debugsplit
+        assign mac_out_split[jj] = mac_out_storage[jj * outputBW +: outputBW]; 
+      end
+    endgenerate
+//------split mac_out for debug reason end-------------//
+
+
 //    This is to populate the fixed array for coefficients
     integer i;
     initial begin
@@ -96,30 +115,40 @@ module test_wrapper
     reg sampled = 0;
     reg mac_1_rst = 0;
     wire  [dataBitwidth - 1 : 0]  newSample;
-
+    wire rst_sampler = 0;
 //  Making fakeData 
     assign newSample = linCounter + 3;
     
-    always @(posedge clk_sampler) begin
+    always @(posedge clk) begin
+      if(rst_sampler) begin
+      end else if (&mac_armed) begin 
         linCounter <= linCounter + 1;
         flatSample <= {newSample, flatSample[totalNBits - 1 : dataBitwidth]};
         sampled <= 1;
+      end
+
     end
 
 //------Sampler end------------------------------------//    
 
 
 //-------Create multiple arrays, each for a MAC--------//
-    wire   [nBits_MAC - 1 : 0] sampleSplit  [0 : nMAC-1];
-    wire   [nBits_MAC - 1 : 0] coeffSplit   [0 : nMAC-1];
-    genvar iMAC;
-    generate
-      for ( iMAC = 0; iMAC < nMAC; iMAC ++) begin : MACs_block
-        assign sampleSplit[iMAC] = flatSample[(iMAC+1) * nBits_MAC - 1 : iMAC * nBits_MAC];
-        assign coeffSplit[iMAC]  = flatCoeff[(iMAC+1) * nBits_MAC - 1 : iMAC * nBits_MAC];
-      end
-    endgenerate
+//    wire   [nBits_MAC - 1 : 0] sampleSplit  [0 : nMAC-1];
+//    wire   [nBits_MAC - 1 : 0] coeffSplit   [0 : nMAC-1];
+//    wire   [outputBW - 1 : 0] mac_sum_split   [0 : nMAC-1];
+//    genvar iMAC;
+//    generate
+//      for ( iMAC = 0; iMAC < nMAC; iMAC ++) begin : MACs_block
+//        assign sampleSplit[iMAC] = flatSample[(iMAC+1) * nBits_MAC - 1 : iMAC * nBits_MAC];
+//        assign coeffSplit[iMAC]  = flatCoeff[(iMAC+1) * nBits_MAC - 1 : iMAC * nBits_MAC];
+//        assign mac_sum_split[iMAC]  = mac_out[(iMAC+1) * outputBW - 1 : iMAC * outputBW];
+//      end
+      
+      
+//    endgenerate
 //-------Create multiple arrays, (each for a MAC) end--//
+
+
 
 
 //------Multiply Accumulator reset counter-------------//
@@ -140,33 +169,44 @@ module test_wrapper
 //------Multiply Accumulator reset counter end---------//  
 
 //----Instantiate multiple MACs -----------------------//
-multiplyAccumulator MACs [nMAC-1 : 0] (
-.inA(flatCoeff),
-.inB(flatSample),
-.clk(clk_mac),
-.rst(mac_rst),
-.mac_out(mac_out)
-);
+
+    multiplyAccumulator 
+      #(
+        .nData(nData),
+        .datBW(dataBitwidth), 
+        .outBW(outputBW)
+      ) MACs [nMAC-1 : 0]
+        (
+          .inA(flatCoeff),
+          .inB(flatSample),
+          .inputUpdated(),
+          .clk(clk_mac),
+          .rst(mac_rst),
+          .mac_done(),
+          .mac_armed(),
+          .mac_out(mac_out)
+        );
+        
+        
+        
 //----Instantiate multiple MACs end--------------------//
 
-
-
-
-//------Multiply Accumulator---------------------------//  
-//  multiplyAccumulator mac_1(
-//		.inA(flatCoeff), 
-//		.inB(flatSample), 
-//		.clk(clk_mac), 
-//		.rst( mac_rst ),
-//		.mac_out(mac_1_out),
-//		.mac_done(mac_done)
-//		);
-//------Multiply Accumulator end-----------------------//
+//------MAC sum----------------------------------------//
     
-   
+    serial_sum 
+      #(
+        .nMAC ( nMAC        ),
+        .datBW( dataBitwidth),
+        .outBW( outputBW    )
+      ) 
+      summer 
+      (
+        .mac_output(mac_out_storage),
+        .clk(clk_mac),
+        .rst(0),
+        .mac_sum(mac_sum)
+//        .sum_finished()
+      );
+//------MAC sum end------------------------------------//
 
 endmodule    
-
-    
-
-    
