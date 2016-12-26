@@ -32,36 +32,46 @@ parameter outBW = 32
       input                         clk,
       input                         rst,
       output reg [outBW - 1:0]      mac_sum = 0,
-      output                        sum_finished,
-      output reg                    armed = 1
+      output                        sum_finished
     );
     
     reg [$clog2(nMAC)  : 0] n = 0;
-    wire execute;
-    assign sum_finished = (n>=nMAC) && ~armed;
-    assign execute = ~sum_finished && inputUpdated;
+//    wire execute;
+    assign sum_finished = (n>=nMAC);
+//    assign execute = ~sum_finished && inputUpdated;
+
+    reg               execute     = 0;
+    reg [outBW - 1:0] new_result  = 0;
+    
+    // Clear things when ever the input is updated (MAC outputs)
+    // And set execute flag to true (1)
+    always @(posedge inputUpdated) begin
+      if(rst) begin
+        execute <= 0;
+      end else begin
+        execute     <= 1;
+        new_result  <= 0;
+        n           <= 0;
+      end
+    end
+    
+    always @(posedge sum_finished) begin
+      execute <= 0;
+      mac_sum <= new_result;
+    end
+    
     
     always @(posedge clk) begin
-      if(rst | sum_finished) begin
-        mac_sum <= 0;
-        n <= 0;
+      if(rst) begin
+        mac_sum     <= 0;
+        n           <= 0;
+        new_result  <= 0;
       
-      end else begin
-        if (armed && inputUpdated) begin
-          armed   <= 0;
-          n       <= 0;
-          mac_sum <= 0;
-        end else if (execute && ~sum_finished) begin
-          n       <= n + 1;
-          mac_sum <= sum_finished ? mac_sum  : (mac_sum + mac_output[n * outBW +: outBW]);
-        end
+      end else if(execute && ~sum_finished) begin
+        n           <= n + 1;
+        new_result  <= new_result + mac_output[n * outBW +: outBW];
         
-      end
-      
-      if (sum_finished) begin
-        armed <= 1;
-      end
-      
+      end      
     end
     
 

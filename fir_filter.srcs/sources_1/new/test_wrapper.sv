@@ -22,7 +22,7 @@
 
 module test_wrapper
   #(
-  parameter nData = 64,
+  parameter nData = 512,          // number of points per MAC, so total would be nMAC * nData
   parameter dataBitwidth = 16,
   parameter nMAC  = 50,
   parameter linCounterBW = 16,    //This is for simulation anddebugging
@@ -133,24 +133,6 @@ module test_wrapper
 
 //------Sampler end------------------------------------//    
 
-
-//------Multiply Accumulator reset counter-------------//
-
-/* These are for generating clocks to clear the MAC, for
- * n MACs in parallel, they can use the same clear signal.
- */
-//    reg [$clog2(nData) : 0] resetCounter = 0;
-//    wire mac_rst;
-//    assign mac_rst = (resetCounter == nData);
-//    always @(posedge clk_mac) begin
-//      if(mac_rst) begin
-//        resetCounter <= 0;
-//      end else begin
-//        resetCounter <= resetCounter + 1;
-//      end
-//    end
-//------Multiply Accumulator reset counter end---------//  
-
 //----Instantiate multiple MACs -----------------------//
 
     multiplyAccumulator 
@@ -194,6 +176,7 @@ module test_wrapper
 //------MAC sum end------------------------------------//
 
 
+endmodule    
 
 
 // Backup some otherwise obsolete code 
@@ -214,4 +197,20 @@ module test_wrapper
 //    endgenerate
 //-------Create multiple arrays, (each for a MAC) end--//
 
-endmodule    
+
+//------Multiply Accumulator reset counter-------------//
+
+/* These are for generating clocks to clear the MAC, for
+ * n MACs in parallel, they can use the same clear signal.
+ */
+//    reg [$clog2(nData) : 0] resetCounter = 0;
+//    wire mac_rst;
+//    assign mac_rst = (resetCounter == nData);
+//    always @(posedge clk_mac) begin
+//      if(mac_rst) begin
+//        resetCounter <= 0;
+//      end else begin
+//        resetCounter <= resetCounter + 1;
+//      end
+//    end
+//------Multiply Accumulator reset counter end---------//  
