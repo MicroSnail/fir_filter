@@ -1,3 +1,5 @@
 fir_filter.cache/
 fir_filter.ip_user_files/
-fir_filter/fir_filter.sim/sim_1/behav/
+fir_filter.sim/sim_1/behav/
+fir_filter.hw/
+fir_filter.runs/

@@ -1,4 +1,4 @@
-`timescale 1ns / 1ps
+`timescale 1ns / 1ns
 //////////////////////////////////////////////////////////////////////////////////
 // Company: 
 // Engineer: 
@@ -28,15 +28,18 @@ parameter outBW = 32
 )
     (
       input [outBW * nMAC - 1: 0]   mac_output,
-      input                         start_sum,
+      input                         inputUpdated,
       input                         clk,
       input                         rst,
       output reg [outBW - 1:0]      mac_sum = 0,
-      output                        sum_finished
+      output                        sum_finished,
+      output reg                    armed = 1
     );
     
     reg [$clog2(nMAC)  : 0] n = 0;
-    assign sum_finished = (n==nMAC);
+    wire execute;
+    assign sum_finished = (n>=nMAC) && ~armed;
+    assign execute = ~sum_finished && inputUpdated;
     
     always @(posedge clk) begin
       if(rst | sum_finished) begin
@@ -44,9 +47,21 @@ parameter outBW = 32
         n <= 0;
       
       end else begin
-        n <= n + 1;
-        mac_sum <= sum_finished ? mac_sum  : (mac_sum + mac_output[n * outBW +: outBW]);
+        if (armed && inputUpdated) begin
+          armed   <= 0;
+          n       <= 0;
+          mac_sum <= 0;
+        end else if (execute && ~sum_finished) begin
+          n       <= n + 1;
+          mac_sum <= sum_finished ? mac_sum  : (mac_sum + mac_output[n * outBW +: outBW]);
+        end
+        
       end
+      
+      if (sum_finished) begin
+        armed <= 1;
+      end
+      
     end
     
 

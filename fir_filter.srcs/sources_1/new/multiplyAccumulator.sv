@@ -1,4 +1,4 @@
-`timescale 1ns / 1ps
+`timescale 1ns / 1ns
 //////////////////////////////////////////////////////////////////////////////////
 // Company: 
 // Engineer: 
@@ -32,37 +32,40 @@ module multiplyAccumulator
   input                             clk,
   input                             rst,
   input                             inputUpdated,
-  output  reg [outBW - 1 : 0]       mac_out,
+  output  reg [outBW - 1 : 0]       mac_out = 0,
   output                            mac_done,
-  output  reg                       mac_armed
+  output  reg                       mac_armed = 1
   
 );
 
   reg [$clog2(nData) : 0] cursor = 0;
-  reg execute = 0;
-  assign mac_done = (cursor == nData);
+//  reg execute = 0;
+  wire execute;
+  assign mac_done = (cursor >= nData) && (~mac_armed);
+  assign execute = (~mac_done) && inputUpdated;
   
   always @(posedge clk) begin
     if (rst) begin
       cursor  <=  0;
       mac_out  <=  {(nData * datBW - 1){1'b0}};
       mac_armed <= 1;
-      execute <= 0;
+//      execute <= 0;
     end else begin
       if (mac_armed && inputUpdated) begin
         mac_armed <= 0;
-        execute   <= 1;
+//        execute   <= 1;
         cursor    <= 0;
+        mac_out   <= 0;
+      end else if(execute && ~mac_done) begin
+        mac_out <= mac_done ? mac_out : mac_out + inA[cursor * datBW  +: datBW] * inB[cursor * datBW +: datBW];
+        cursor <= cursor + 1;
       end
       
       if (mac_done) begin
         mac_armed <= 1;
       end
       
-      if(execute) begin
-        mac_out <= mac_done ? mac_out : mac_out + inA[cursor * datBW  +: datBW] * inB[cursor * datBW +: datBW];
-        cursor <= cursor + 1;
-      end
+      
     end
   end
 

@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="test_wrapper_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="test_wrapper" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="5262080000fs"></ZoomStartTime>
+      <ZoomEndTime time="7954080001fs"></ZoomEndTime>
+      <Cursor1Time time="1175000000fs"></Cursor1Time>
+   </zoom_setting>
+   <WVObjectSize size="35" />
+   <wvobject fp_name="/test_wrapper/debug" type="array">
+      <obj_property name="ElementShortName">debug[31:0]</obj_property>
+      <obj_property name="ObjectShortName">debug[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_wrapper/flatCoeff" type="array">
+      <obj_property name="ElementShortName">flatCoeff[51199:0]</obj_property>
+      <obj_property name="ObjectShortName">flatCoeff[51199:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_wrapper/mac_out_storage" type="array">
+      <obj_property name="ElementShortName">mac_out_storage[1599:0]</obj_property>
+      <obj_property name="ObjectShortName">mac_out_storage[1599:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_wrapper/mac_direct_out" type="array">
+      <obj_property name="ElementShortName">mac_direct_out[1599:0]</obj_property>
+      <obj_property name="ObjectShortName">mac_direct_out[1599:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_wrapper/mac_sum" type="array">
+      <obj_property name="ElementShortName">mac_sum[31:0]</obj_property>
+      <obj_property name="ObjectShortName">mac_sum[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_wrapper/mac_armed" type="array">
+      <obj_property name="ElementShortName">mac_armed[49:0]</obj_property>
+      <obj_property name="ObjectShortName">mac_armed[49:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_wrapper/mac_done" type="array">
+      <obj_property name="ElementShortName">mac_done[49:0]</obj_property>
+      <obj_property name="ObjectShortName">mac_done[49:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_wrapper/linCounter" type="array">
+      <obj_property name="ElementShortName">linCounter[15:0]</obj_property>
+      <obj_property name="ObjectShortName">linCounter[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_wrapper/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_wrapper/mac_out_storage_updated" type="logic">
+      <obj_property name="ElementShortName">mac_out_storage_updated</obj_property>
+      <obj_property name="ObjectShortName">mac_out_storage_updated</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_wrapper/mac_out_split" type="array">
+      <obj_property name="ElementShortName">mac_out_split[0:49][31:0]</obj_property>
+      <obj_property name="ObjectShortName">mac_out_split[0:49][31:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      <wvobject fp_name="/test_wrapper/mac_out_split[0]" type="array">
+         <obj_property name="ElementShortName">[0][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[0][31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_wrapper/mac_out_split[1]" type="array">
+         <obj_property name="ElementShortName">[1][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[1][31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_wrapper/mac_out_split[2]" type="array">
+         <obj_property name="ElementShortName">[2][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[2][31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_wrapper/mac_out_split[3]" type="array">
+         <obj_property name="ElementShortName">[3][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[3][31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_wrapper/mac_out_split[4]" type="array">
+         <obj_property name="ElementShortName">[4][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[4][31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_wrapper/mac_out_split[5]" type="array">
+         <obj_property name="ElementShortName">[5][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[5][31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_wrapper/mac_out_split[6]" type="array">
+         <obj_property name="ElementShortName">[6][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[6][31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_wrapper/mac_out_split[7]" type="array">
+         <obj_property name="ElementShortName">[7][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[7][31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_wrapper/mac_out_split[8]" type="array">
+         <obj_property name="ElementShortName">[8][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[8][31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_wrapper/mac_out_split[9]" type="array">
+         <obj_property name="ElementShortName">[9][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[9][31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_wrapper/mac_out_split[10]" type="array">
+         <obj_property name="ElementShortName">[10][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[10][31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_wrapper/mac_out_split[11]" type="array">
+         <obj_property name="ElementShortName">[11][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[11][31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_wrapper/mac_out_split[12]" type="array">
+         <obj_property name="ElementShortName">[12][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[12][31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_wrapper/mac_out_split[13]" type="array">
+         <obj_property name="ElementShortName">[13][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[13][31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_wrapper/mac_out_split[14]" type="array">
+         <obj_property name="ElementShortName">[14][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[14][31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_wrapper/mac_out_split[15]" type="array">
+         <obj_property name="ElementShortName">[15][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[15][31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_wrapper/mac_out_split[16]" type="array">
+         <obj_property name="ElementShortName">[16][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[16][31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_wrapper/mac_out_split[17]" type="array">
+         <obj_property name="ElementShortName">[17][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[17][31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_wrapper/mac_out_split[18]" type="array">
+         <obj_property name="ElementShortName">[18][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[18][31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_wrapper/mac_out_split[19]" type="array">
+         <obj_property name="ElementShortName">[19][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[19][31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_wrapper/mac_out_split[20]" type="array">
+         <obj_property name="ElementShortName">[20][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[20][31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_wrapper/mac_out_split[21]" type="array">
+         <obj_property name="ElementShortName">[21][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[21][31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_wrapper/mac_out_split[22]" type="array">
+         <obj_property name="ElementShortName">[22][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[22][31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_wrapper/mac_out_split[23]" type="array">
+         <obj_property name="ElementShortName">[23][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[23][31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_wrapper/mac_out_split[24]" type="array">
+         <obj_property name="ElementShortName">[24][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[24][31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_wrapper/mac_out_split[25]" type="array">
+         <obj_property name="ElementShortName">[25][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[25][31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_wrapper/mac_out_split[26]" type="array">
+         <obj_property name="ElementShortName">[26][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[26][31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_wrapper/mac_out_split[27]" type="array">
+         <obj_property name="ElementShortName">[27][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[27][31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_wrapper/mac_out_split[28]" type="array">
+         <obj_property name="ElementShortName">[28][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[28][31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_wrapper/mac_out_split[29]" type="array">
+         <obj_property name="ElementShortName">[29][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[29][31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_wrapper/mac_out_split[30]" type="array">
+         <obj_property name="ElementShortName">[30][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[30][31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_wrapper/mac_out_split[31]" type="array">
+         <obj_property name="ElementShortName">[31][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[31][31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_wrapper/mac_out_split[32]" type="array">
+         <obj_property name="ElementShortName">[32][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[32][31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_wrapper/mac_out_split[33]" type="array">
+         <obj_property name="ElementShortName">[33][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[33][31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_wrapper/mac_out_split[34]" type="array">
+         <obj_property name="ElementShortName">[34][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[34][31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_wrapper/mac_out_split[35]" type="array">
+         <obj_property name="ElementShortName">[35][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[35][31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_wrapper/mac_out_split[36]" type="array">
+         <obj_property name="ElementShortName">[36][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[36][31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_wrapper/mac_out_split[37]" type="array">
+         <obj_property name="ElementShortName">[37][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[37][31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_wrapper/mac_out_split[38]" type="array">
+         <obj_property name="ElementShortName">[38][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[38][31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_wrapper/mac_out_split[39]" type="array">
+         <obj_property name="ElementShortName">[39][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[39][31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_wrapper/mac_out_split[40]" type="array">
+         <obj_property name="ElementShortName">[40][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[40][31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_wrapper/mac_out_split[41]" type="array">
+         <obj_property name="ElementShortName">[41][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[41][31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_wrapper/mac_out_split[42]" type="array">
+         <obj_property name="ElementShortName">[42][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[42][31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_wrapper/mac_out_split[43]" type="array">
+         <obj_property name="ElementShortName">[43][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[43][31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_wrapper/mac_out_split[44]" type="array">
+         <obj_property name="ElementShortName">[44][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[44][31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_wrapper/mac_out_split[45]" type="array">
+         <obj_property name="ElementShortName">[45][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[45][31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_wrapper/mac_out_split[46]" type="array">
+         <obj_property name="ElementShortName">[46][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[46][31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_wrapper/mac_out_split[47]" type="array">
+         <obj_property name="ElementShortName">[47][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[47][31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_wrapper/mac_out_split[48]" type="array">
+         <obj_property name="ElementShortName">[48][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[48][31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/test_wrapper/mac_out_split[49]" type="array">
+         <obj_property name="ElementShortName">[49][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[49][31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="/test_wrapper/i" type="array">
+      <obj_property name="ElementShortName">i[31:0]</obj_property>
+      <obj_property name="ObjectShortName">i[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_wrapper/flatSample" type="array">
+      <obj_property name="ElementShortName">flatSample[51199:0]</obj_property>
+      <obj_property name="ObjectShortName">flatSample[51199:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_wrapper/sampled" type="logic">
+      <obj_property name="ElementShortName">sampled</obj_property>
+      <obj_property name="ObjectShortName">sampled</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_wrapper/mac_1_rst" type="logic">
+      <obj_property name="ElementShortName">mac_1_rst</obj_property>
+      <obj_property name="ObjectShortName">mac_1_rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_wrapper/newSample" type="array">
+      <obj_property name="ElementShortName">newSample[15:0]</obj_property>
+      <obj_property name="ObjectShortName">newSample[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_wrapper/rst_sampler" type="logic">
+      <obj_property name="ElementShortName">rst_sampler</obj_property>
+      <obj_property name="ObjectShortName">rst_sampler</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_wrapper/\MACs[49] /inA" type="array">
+      <obj_property name="ElementShortName">inA[1023:0]</obj_property>
+      <obj_property name="ObjectShortName">inA[1023:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_wrapper/\MACs[49] /inB" type="array">
+      <obj_property name="ElementShortName">inB[1023:0]</obj_property>
+      <obj_property name="ObjectShortName">inB[1023:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_wrapper/\MACs[49] /clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_wrapper/\MACs[49] /rst" type="logic">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_wrapper/\MACs[49] /inputUpdated" type="logic">
+      <obj_property name="ElementShortName">inputUpdated</obj_property>
+      <obj_property name="ObjectShortName">inputUpdated</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_wrapper/\MACs[49] /mac_out" type="array">
+      <obj_property name="ElementShortName">mac_out[31:0]</obj_property>
+      <obj_property name="ObjectShortName">mac_out[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_wrapper/\MACs[49] /mac_done" type="logic">
+      <obj_property name="ElementShortName">mac_done</obj_property>
+      <obj_property name="ObjectShortName">mac_done</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_wrapper/\MACs[49] /mac_armed" type="logic">
+      <obj_property name="ElementShortName">mac_armed</obj_property>
+      <obj_property name="ObjectShortName">mac_armed</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_wrapper/\MACs[49] /cursor" type="array">
+      <obj_property name="ElementShortName">cursor[6:0]</obj_property>
+      <obj_property name="ObjectShortName">cursor[6:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_wrapper/\MACs[49] /execute" type="logic">
+      <obj_property name="ElementShortName">execute</obj_property>
+      <obj_property name="ObjectShortName">execute</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_wrapper/summer/mac_output" type="array">
+      <obj_property name="ElementShortName">mac_output[1599:0]</obj_property>
+      <obj_property name="ObjectShortName">mac_output[1599:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_wrapper/summer/inputUpdated" type="logic">
+      <obj_property name="ElementShortName">inputUpdated</obj_property>
+      <obj_property name="ObjectShortName">inputUpdated</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_wrapper/summer/rst" type="logic">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_wrapper/summer/mac_sum" type="array">
+      <obj_property name="ElementShortName">mac_sum[31:0]</obj_property>
+      <obj_property name="ObjectShortName">mac_sum[31:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_wrapper/summer/sum_finished" type="logic">
+      <obj_property name="ElementShortName">sum_finished</obj_property>
+      <obj_property name="ObjectShortName">sum_finished</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_wrapper/summer/armed" type="logic">
+      <obj_property name="ElementShortName">armed</obj_property>
+      <obj_property name="ObjectShortName">armed</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_wrapper/summer/n" type="array">
+      <obj_property name="ElementShortName">n[6:0]</obj_property>
+      <obj_property name="ObjectShortName">n[6:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_wrapper/summer/execute" type="logic">
+      <obj_property name="ElementShortName">execute</obj_property>
+      <obj_property name="ObjectShortName">execute</obj_property>
+   </wvobject>
+</wave_config>
